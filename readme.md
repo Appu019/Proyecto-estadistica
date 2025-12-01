@@ -66,6 +66,11 @@ Windows (PowerShell)
 powershell
 ```bash
 python -m venv .venv
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Después confirma con:
+Get-ExecutionPolicy -Scope CurrentUser
+
 .venv\Scripts\Activate.ps1
 ```
 
