@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Análisis Electoral Bolivia 2025</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Análisis Electoral Bolivia 2025</h1>
+    <p>Relación entre el voto por el Partido Ganador y el Tipo de Circunscripción (Urbano vs Rural)</p>
+  </header>
+
+  <main>
+    <section class="info">
+      <h2>¿Qué estamos analizando?</h2>
+      <p>
+        Este análisis investiga si la victoria del partido ganador (PDC o LIBRE) está asociada al tipo de circunscripción (Urbana o Rural).
+        Se aplica una <strong>prueba Chi-cuadrado</strong> para determinar si las variables son independientes y una <strong>prueba T-Student</strong> para comparar medias de votos.
+      </p>
+    </section>
+
+    <section class="results">
+      <h2>Resultados del Análisis</h2>
+      <div id="loading">Cargando resultados...</div>
+      <div id="results-content" style="display: none;">
+        <h3>Chi-cuadrado</h3>
+        <p>Chi2: <span id="chi2"></span></p>
+        <p>p-valor: <span id="p_value"></span></p>
+        <p>Grados de libertad: <span id="dof"></span></p>
+        <h3>T-Student</h3>
+        <p>Estadístico: <span id="t_statistic"></span></p>
+        <p>p-valor: <span id="t_p_value"></span></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
