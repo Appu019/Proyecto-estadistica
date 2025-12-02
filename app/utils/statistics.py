@@ -12,7 +12,10 @@ def chi_square_test_from_df(df: pd.DataFrame) -> dict:
             "contingency_table": tabla.to_dict()
         }
 
-    chi2, p_valor, dof, expected = chi2_contingency(tabla)
+    # Para tablas 2x2 la función aplica por defecto la corrección de Yates,
+    # lo cual puede producir chi2 == 0 cuando las diferencias observadas son < 0.5.
+    # Usamos correction=False para obtener la chi-cuadrado de Pearson sin corrección.
+    chi2, p_valor, dof, expected = chi2_contingency(tabla, correction=False)
 
     # Interpretación
     alpha = 0.05
@@ -23,18 +26,25 @@ def chi_square_test_from_df(df: pd.DataFrame) -> dict:
         "decision": f"{decision} (p = {p_valor:.3f} > {alpha}). No hay evidencia estadística de asociación." if p_valor > alpha else f"{decision} (p = {p_valor:.3e} < {alpha}). Hay asociación significativa."
     }
 
+    # Devolver claves compatibles con el front y con el schema: incluir 'dof' y 'expected'
     return {
         "chi2": float(chi2),
         "p_value": float(p_valor),
+        "dof": int(dof),
         "degrees_of_freedom": int(dof),
         "contingency_table": tabla.to_dict(),
+        "expected": expected.tolist(),
         "expected_frequencies": expected.tolist(),
         "interpretation": interpretation
     }
 def t_test_from_df(df: pd.DataFrame) -> dict:
-    df['TipoZona'] = df.apply(
-        lambda row: 'Urbana' if row['CodigoCircunscripcionU'] > 0 else 'Rural', axis=1
-    )
+    # Clasificar TipoZona usando regla Votantes > mediana, si está disponible
+    if 'Votantes' in df.columns and not df['Votantes'].isna().all():
+        median_vot = df['Votantes'].median()
+        df['TipoZona'] = df['Votantes'].apply(lambda v: 'Urbana' if (pd.notna(v) and v > median_vot) else 'Rural')
+    else:
+        # Fallback a CodigoCircunscripcionU cuando no haya Votantes
+        df['TipoZona'] = df.apply(lambda row: 'Urbana' if (pd.notna(row.get('CodigoCircunscripcionU')) and row.get('CodigoCircunscripcionU') > 0) else 'Rural', axis=1)
 
     urb = df[df['TipoZona'] == 'Urbana']['PDC']
     rur = df[df['TipoZona'] == 'Rural']['PDC']

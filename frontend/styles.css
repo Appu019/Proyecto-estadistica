@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f4f4f4;
@@ -7,9 +7,9 @@ body {
 }
 
 header {
-  background-color: #003366;
+  background: linear-gradient(90deg, #0b3d91 0%, #0057b7 100%);
   color: white;
-  padding: 20px;
+  padding: 28px 20px;
   text-align: center;
 }
 
@@ -17,33 +17,36 @@ header h1 {
   margin: 0;
 }
 
+.header-inner p { margin: 8px 0 0; opacity: 0.95 }
+
 main {
   padding: 20px;
 }
 
-.info, .results {
-  background: white;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
+.container { max-width: 1100px; margin: 0 auto }
+.info, .results { background: white; margin: 20px 0; padding: 20px; border-radius: 10px; box-shadow: 0 6px 18px rgba(11,61,145,0.08) }
 
-h2 {
-  color: #003366;
-}
+h2 { color: #09366a }
 
-#loading {
-  text-align: center;
-  font-size: 1.2em;
-  color: #555;
-}
+.results-header { display:flex; justify-content:space-between; align-items:center }
+.results-header button { background:#007bff; color:white; border:0; padding:8px 12px; border-radius:6px; cursor:pointer }
+.results-header button:hover{ background:#0069e0 }
 
-#results-content h3 {
-  color: #0066cc;
-}
+.loading { text-align:center; font-size:1.05rem; color:#666; padding:18px 0 }
 
-#results-content p {
-  font-size: 1.1em;
-  margin: 10px 0;
-}
+.grid { display:grid; grid-template-columns: 1fr 420px; gap:20px }
+@media (max-width:900px){ .grid{ grid-template-columns: 1fr } }
+
+.card { background: linear-gradient(180deg,#fff 0%, #fbfdff 100%); padding:18px; border-radius:10px; box-shadow: 0 6px 20px rgba(11,61,145,0.06) }
+.card h3{ margin-top:0; color:#06326b }
+.stat{ display:flex; justify-content:space-between; padding:6px 0; font-weight:600 }
+.label{ color:#666; font-weight:600 }
+.block{ margin-top:12px }
+.table-wrap{ overflow:auto; border:1px solid #e6eefc; padding:8px; border-radius:6px; background:#fbfcff }
+table.contingency{ border-collapse:collapse; width:100% }
+table.contingency th, table.contingency td{ border:1px solid #e6eefc; padding:8px; text-align:center }
+table.contingency th{ background:#f4f8ff }
+
+.small { font-size:0.95rem; color:#555 }
+
+.note { font-size:0.9rem; color:#666; margin-top:10px }

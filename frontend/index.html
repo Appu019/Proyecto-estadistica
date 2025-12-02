@@ -7,8 +7,10 @@
 </head>
 <body>
   <header>
-    <h1>Análisis Electoral Bolivia 2025</h1>
-    <p>Relación entre el voto por el Partido Ganador y el Tipo de Circunscripción (Urbano vs Rural)</p>
+    <div class="header-inner">
+      <h1>Análisis Electoral Bolivia 2025</h1>
+      <p>Asociación entre partido ganador y tipo de circunscripción (Urbano vs Rural)</p>
+    </div>
   </header>
 
   <main>
@@ -21,20 +23,65 @@
     </section>
 
     <section class="results">
-      <h2>Resultados del Análisis</h2>
-      <div id="loading">Cargando resultados...</div>
-      <div id="results-content" style="display: none;">
-        <h3>Chi-cuadrado</h3>
-        <p>Chi2: <span id="chi2"></span></p>
-        <p>p-valor: <span id="p_value"></span></p>
-        <p>Grados de libertad: <span id="dof"></span></p>
-        <h3>T-Student</h3>
-        <p>Estadístico: <span id="t_statistic"></span></p>
-        <p>p-valor: <span id="t_p_value"></span></p>
+      <div class="results-header">
+        <h2>Resultados del Análisis</h2>
+        <button id="refresh">Actualizar</button>
+      </div>
+
+      <div id="loading" class="loading">Cargando resultados...</div>
+
+      <div id="results-content" class="grid" style="display: none;">
+        <div class="card">
+          <h3>Chi-cuadrado</h3>
+          <div class="stat"><span class="label">Chi2</span><span id="chi2">—</span></div>
+          <div class="stat"><span class="label">p-valor</span><span id="p_value">—</span></div>
+          <div class="stat"><span class="label">Grados de libertad</span><span id="dof">—</span></div>
+          <div class="block">
+            <h4>Tabla de contingencia</h4>
+            <div id="contingency-table" class="table-wrap">Cargando tabla...</div>
+          </div>
+          <div class="block">
+            <h4>Interpretación</h4>
+            <div id="chi-interpret">—</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>T-Student (PDC)</h3>
+          <div class="stat"><span class="label">Estadístico</span><span id="t_statistic">—</span></div>
+          <div class="stat"><span class="label">p-valor</span><span id="t_p_value">—</span></div>
+          <div class="block">
+            <h4>Medias</h4>
+            <div id="means">—</div>
+          </div>
+          <div class="block">
+            <h4>Desviación / Tamaño</h4>
+            <div id="stds">—</div>
+            <div id="ns">—</div>
+          </div>
+          <div class="block">
+            <h4>Interpretación</h4>
+            <div id="t-interpret">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid charts" style="margin-top:18px;">
+        <div class="card">
+          <h4>Distribución de Ganadores por Zona</h4>
+          <canvas id="contingencyChart" height="180"></canvas>
+        </div>
+
+        <div class="card">
+          <h4>Media de votos PDC por Zona</h4>
+          <canvas id="meansChart" height="180"></canvas>
+        </div>
       </div>
     </section>
   </main>
 
   <script src="script.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>

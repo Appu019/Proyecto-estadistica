@@ -3,8 +3,29 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from app.api.endpoints import analysis, data
 from app.services.data_service import cargar_y_analizar_datos
+from app.services.data_service import get_zone_distribution
+from fastapi import APIRouter
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="API de Análisis Estadístico Electoral")
+
+# Configure CORS to allow the frontend server used for development
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:5501",
+        "http://localhost:5501",
+        "http://127.0.0.1:5500",
+        "http://localhost:5500",
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+router = APIRouter()
 
 # Montar la carpeta de frontend como archivos estáticos
 app.mount("/static", StaticFiles(directory="frontend"), name="static")
@@ -24,6 +45,12 @@ def get_analysis_results_for_postman():
     Devuelve los resultados del análisis estadístico en formato JSON.
     """
     return cargar_y_analizar_datos()
+
+
+
+@router.get("/zone-distribution")
+def zone_distribution():
+    return get_zone_distribution()
 
 # Api publica para consumo desde JS
 # http://127.0.0.1:8000/data/analyze-results
