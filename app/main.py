@@ -9,18 +9,11 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(title="API de Análisis Estadístico Electoral")
 
-# Configure CORS to allow the frontend server used for development
+# Configure CORS to allow any origin/method/header (development convenience)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://127.0.0.1:5501",
-        "http://localhost:5501",
-        "http://127.0.0.1:5500",
-        "http://localhost:5500",
-        "http://127.0.0.1:8000",
-        "http://localhost:8000",
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
